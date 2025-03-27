@@ -19,10 +19,7 @@ public class BoardService {
         var boardColumDao = new BoardColumnDAO(connection);
         try {
             BoardEntity insertedEntity = dao.insert(entity);
-            var entityColums = insertedEntity.getBoardColumns().stream().map(boardColumn -> {
-                boardColumn.setBoard(insertedEntity);
-                return boardColumn;
-            }).toList();
+            var entityColums = insertedEntity.getBoardColumns().stream().peek(boardColumn -> boardColumn.setBoard(insertedEntity)).toList();
             for (var colum : entityColums) {
                 boardColumDao.insert(colum);
             }
@@ -53,7 +50,7 @@ public class BoardService {
         var dao = new BoardDAO(connection);
         var boardColumDao = new BoardColumnDAO(connection);
         try {
-            Optional<BoardEntity> entity = findById(id);
+            Optional<BoardEntity> entity = dao.findById(id);
             if (entity.isPresent()) {
                 entity.get().setBoardColumns(boardColumDao.findByBoardId(entity.get().getId()));
                 return entity;
