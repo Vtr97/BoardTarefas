@@ -91,10 +91,11 @@ public class BoardColumnDAO {
 
     public Optional<BoardColumnEntity> findById(Long id) throws SQLException {
         var sql = """
-                    SELECT name,type 
-                    FROM boards_columns
+                    SELECT  bc.name,
+                            bc.type 
+                    FROM boards_columns bc
                     INNER JOIN cards
-                        ON board_column_id = boards_columns.id
+                        ON cards.board_column_id = boards_columns.id
                     WHERE id = ? 
                     ORDER BY `order`;
                 """;
