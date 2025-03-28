@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @AllArgsConstructor
 public class BoardColumnDAO {
     private final Connection connection;
@@ -59,17 +61,16 @@ public class BoardColumnDAO {
     public List<BoardColumnDTO> getBoardColumnsDetails(Long id) throws SQLException {
         var sql =
                 """
-                            SELECT 
-                                bc.id,
-                                bc.name,
-                                bc.type,
-                                COUNT(
-                                    SELECT c.id 
-                                    FROM cards c
-                                    WHERE c.board_column_id = bc.id) total_cards
-                            FROM board_columns bc
-                            WHERE board_id = ?
-                            ORDER BY `order`;    
+                                SELECT
+                                     bc.id,
+                                     bc.name,
+                                     bc.type,
+                                     (SELECT COUNT(c.id)
+                                      FROM cards c
+                                      WHERE c.board_column_id = bc.id) AS total_cards
+                                FROM boards_columns bc
+                                WHERE board_id = ?
+                                ORDER BY `order`;
                         """;
         List<BoardColumnDTO> dtoList = new ArrayList<>();
         try (var statement = connection.prepareStatement(sql)) {
@@ -92,11 +93,14 @@ public class BoardColumnDAO {
     public Optional<BoardColumnEntity> findById(Long id) throws SQLException {
         var sql = """
                     SELECT  bc.name,
-                            bc.type 
+                            bc.type ,
+                            cards.title,
+                            cards.id,
+                            cards.created_at,cards.description
                     FROM boards_columns bc
-                    INNER JOIN cards
-                        ON cards.board_column_id = boards_columns.id
-                    WHERE id = ? 
+                    LEFT JOIN cards
+                        ON cards.board_column_id = bc.id
+                    WHERE bc.id = ? 
                     ORDER BY `order`;
                 """;
         try (var statement = connection.prepareStatement(sql)) {
@@ -105,16 +109,20 @@ public class BoardColumnDAO {
             var resultSet = statement.getResultSet();
             if (resultSet.next()) {
                 var entity = new BoardColumnEntity();
-                entity.setName(resultSet.getString("boards_columns.name"));
-                entity.setType(BoardColumnTypeEnum.valueOf(resultSet.getString("boards_columns.type")));
+                entity.setName(resultSet.getString("bc.name"));
+                entity.setType(BoardColumnTypeEnum.valueOf(resultSet.getString("bc.type")));
                 do {
+                    if (isNull(resultSet.getString("cards.title"))) {
+                        break;
+                    }
                     var card = new CardEntity();
                     card.setId(resultSet.getLong("cards.id"));
                     card.setTitle(resultSet.getString("cards.title"));
-                    card.setCreate_at(resultSet.getTimestamp("cards.created_at").toInstant().atOffset(ZoneOffset.of("UTC")));
+                    card.setCreated_at(resultSet.getTimestamp("cards.created_at").toInstant().atOffset(ZoneOffset.UTC));
                     card.setDescription(resultSet.getString("cards.description"));
                     entity.getCards().add(card);
                 } while (resultSet.next());
+                return Optional.of(entity);
             }
             return Optional.empty();
         }

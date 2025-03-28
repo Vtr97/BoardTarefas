@@ -8,6 +8,8 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+import static marques.vitor.persistence.entity.BoardColumnTypeEnum.INITIAL;
+
 @Data
 public class BoardEntity {
     private Long id;
@@ -15,4 +17,9 @@ public class BoardEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<BoardColumnEntity> boardColumns = new ArrayList<>();
+
+    public BoardColumnEntity initialColumn() {
+        return boardColumns.stream().filter(
+                bc -> bc.getType().equals(INITIAL)).findFirst().orElseThrow();
+    }
 }

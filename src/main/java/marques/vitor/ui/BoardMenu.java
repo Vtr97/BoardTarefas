@@ -2,6 +2,7 @@ package marques.vitor.ui;
 
 import lombok.AllArgsConstructor;
 import marques.vitor.persistence.entity.BoardColumnEntity;
+import marques.vitor.persistence.entity.BoardColumnTypeEnum;
 import marques.vitor.persistence.entity.BoardEntity;
 import marques.vitor.persistence.entity.CardEntity;
 import marques.vitor.service.BoardColumnService;
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime;
 import java.util.Scanner;
 
 import static marques.vitor.persistence.config.ConnectionConfig.getConnection;
+import static marques.vitor.persistence.entity.BoardColumnTypeEnum.INITIAL;
 
 
 @AllArgsConstructor
@@ -85,12 +87,12 @@ public class BoardMenu {
         try (var connection = getConnection()) {
             var column = new BoardColumnService(connection).findById(selectedColumn);
             if (column.isPresent()) {
-                System.out.printf("Coluna: %s tipo: %s ",
+                System.out.printf("Coluna: %s tipo: %s \n",
                         column.get().getName(),
                         column.get().getType());
                 column.get().getCards().forEach(
-                        card -> System.out.printf("Card %s - %s\nCriado em: %s \n Descrição: %s",
-                                card.getId(), card.getTitle(), card.getCreate_at(), card.getDescription())
+                        card -> System.out.printf("Card %s - %s\nCriado em: %s \n Descrição: %s\n",
+                                card.getId(), card.getTitle(), card.getCreated_at(), card.getDescription())
                 );
             }
         }
@@ -104,7 +106,7 @@ public class BoardMenu {
                 var details = boardDetails.get();
                 System.out.printf("Board id: %s  nome: %s \n", details.id(), details.name());
                 details.columns().forEach(c ->
-                        System.out.printf("Coluna id: %s nome:%s tipo: %s tem %s cards", c.id(), c.name(), c.type().toString(), c.cardsAmount())
+                        System.out.printf("Coluna id: %s nome: %s tipo: %s tem %s cards\n ", c.id(), c.name(), c.type().toString(), c.cardsAmount())
                 );
             }
         }
@@ -117,11 +119,11 @@ public class BoardMenu {
             var cardService = new CardService(connection);
             var selectedCard = cardService.findById(selectedCardId);
             if (selectedCard.isPresent()) {
-                System.out.printf("card: %s  $s\n", selectedCard.get().id(), selectedCard.get().title());
+                System.out.printf("card: %s  %s\n", selectedCard.get().id(), selectedCard.get().title());
                 System.out.printf("Descrição: %s \n", selectedCard.get().description());
                 System.out.printf("Criado em: %s \n", selectedCard.get().createdAt());
                 System.out.println(selectedCard.get().blocked() ? "Está bloqueado. Motivo: " + selectedCard.get().blockedReason() : "");
-                System.out.printf("Está na coluna %s %s", selectedCard.get().ColumnId(), selectedCard.get().ColumnName());
+                System.out.printf("Está na coluna %s %s \n", selectedCard.get().ColumnId(), selectedCard.get().ColumnName());
             } else {
                 System.out.printf("Não foi possível achar a card de id %s, informe um id válido \n", selectedCardId);
             }
@@ -140,14 +142,19 @@ public class BoardMenu {
     private void moveCard() {
     }
 
-    private void createCard() {
+    private void createCard() throws SQLException {
         CardEntity cardEntity = new CardEntity();
-        cardEntity.setCreate_at(OffsetDateTime.now());
+        cardEntity.setCreated_at(OffsetDateTime.now());
         System.out.println("Digite o titulo do card: ");
         var cardTitle = scanner.next();
         cardEntity.setTitle(cardTitle);
         System.out.println("Digite a descrição do card: ");
         var cardDesc = scanner.next();
-        cardEntity.setTitle(cardDesc);
+        cardEntity.setDescription(cardDesc);
+        var creationColumn = entity.initialColumn();
+        cardEntity.setBoardColumn(creationColumn);
+        try (var connection = getConnection()) {
+            new CardService(connection).insert(cardEntity);
+        }
     }
 }
