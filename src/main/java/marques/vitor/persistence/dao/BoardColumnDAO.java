@@ -7,9 +7,12 @@ import marques.vitor.dto.BoardColumnDTO;
 import marques.vitor.persistence.entity.BoardColumnEntity;
 import marques.vitor.persistence.entity.BoardColumnTypeEnum;
 import marques.vitor.persistence.entity.BoardEntity;
+import marques.vitor.persistence.entity.CardEntity;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -83,6 +86,36 @@ public class BoardColumnDAO {
                 dtoList.add(dto);
             }
             return dtoList;
+        }
+    }
+
+    public Optional<BoardColumnEntity> findById(Long id) throws SQLException {
+        var sql = """
+                    SELECT name,type 
+                    FROM boards_columns
+                    INNER JOIN cards
+                        ON board_column_id = boards_columns.id
+                    WHERE id = ? 
+                    ORDER BY `order`;
+                """;
+        try (var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            statement.executeQuery();
+            var resultSet = statement.getResultSet();
+            if (resultSet.next()) {
+                var entity = new BoardColumnEntity();
+                entity.setName(resultSet.getString("boards_columns.name"));
+                entity.setType(BoardColumnTypeEnum.valueOf(resultSet.getString("boards_columns.type")));
+                do {
+                    var card = new CardEntity();
+                    card.setId(resultSet.getLong("cards.id"));
+                    card.setTitle(resultSet.getString("cards.title"));
+                    card.setCreate_at(resultSet.getTimestamp("cards.created_at").toInstant().atOffset(ZoneOffset.of("UTC")));
+                    card.setDescription(resultSet.getString("cards.description"));
+                    entity.getCards().add(card);
+                } while (resultSet.next());
+            }
+            return Optional.empty();
         }
     }
 }
