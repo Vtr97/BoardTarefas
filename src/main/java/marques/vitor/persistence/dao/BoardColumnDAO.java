@@ -3,6 +3,7 @@ package marques.vitor.persistence.dao;
 
 import com.mysql.cj.jdbc.StatementImpl;
 import lombok.AllArgsConstructor;
+import marques.vitor.dto.BoardColumnDTO;
 import marques.vitor.persistence.entity.BoardColumnEntity;
 import marques.vitor.persistence.entity.BoardColumnTypeEnum;
 import marques.vitor.persistence.entity.BoardEntity;
@@ -18,7 +19,18 @@ public class BoardColumnDAO {
     private final Connection connection;
 
     public BoardColumnEntity insert(final BoardColumnEntity entity) throws SQLException {
-        return null;
+        var sql = "INSERT INTO boards_columns (name,`order`, type, board_id) VALUES (?, ?, ?, ?);";
+        try (var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, entity.getName());
+            statement.setInt(2, entity.getOrder());
+            statement.setString(3, entity.getType().toString());
+            statement.setLong(4, entity.getBoard().getId());
+            statement.executeUpdate();
+            if (statement instanceof StatementImpl impl) {
+                entity.setId(impl.getLastInsertID());
+            }
+            return entity;
+        }
     }
 
 
@@ -40,4 +52,40 @@ public class BoardColumnDAO {
             return list;
         }
     }
+
+    public List<BoardColumnDTO> getBoardColumnsDetails(Long id) throws SQLException {
+        var sql =
+                """
+                            SELECT 
+                                bc.id,
+                                bc.name,
+                                bc.type,
+                                COUNT(
+                                    SELECT c.id 
+                                    FROM cards c
+                                    WHERE c.board_column_id = bc.id) total_cards
+                            FROM board_columns bc
+                            WHERE board_id = ?
+                            ORDER BY `order`;    
+                        """;
+        List<BoardColumnDTO> dtoList = new ArrayList<>();
+        try (var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            statement.executeQuery();
+            var resultSet = statement.getResultSet();
+            while (resultSet.next()) {
+                var dto = new BoardColumnDTO(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        BoardColumnTypeEnum.valueOf(resultSet.getString("type")),
+                        resultSet.getInt("total_cards")
+                );
+                dtoList.add(dto);
+            }
+            return dtoList;
+        }
+    }
 }
+
+
+

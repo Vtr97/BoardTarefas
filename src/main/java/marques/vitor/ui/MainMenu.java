@@ -14,7 +14,7 @@ import static marques.vitor.persistence.config.ConnectionConfig.getConnection;
 import static marques.vitor.persistence.entity.BoardColumnTypeEnum.*;
 
 public class MainMenu {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
     public void execute() throws SQLException {
         System.out.println("Gerenciador de boards, selecione os comandos com a tecla associada: ");
@@ -69,13 +69,13 @@ public class MainMenu {
 
         System.out.println("Informe o nome da ultima coluna: ");
         var lastColumName = scanner.next();
-        var lastColumn = createBoardColum(lastColumName, INITIAL, columns + 1);
+        var lastColumn = createBoardColum(lastColumName, FINAL, columns + 1);
         boardColumnEntities.add(lastColumn);
 
         System.out.println("Informe o nome da coluna de cancelamento: ");
         var cancelColumnName = scanner.next();
         var cancelColumn = createBoardColum(cancelColumnName, CANCEL, columns + 2);
-        boardColumnEntities.add((cancelColumn));
+        boardColumnEntities.add(cancelColumn);
 
         boardEntity.setBoardColumns(boardColumnEntities);
         try (var connection = getConnection()) {
@@ -85,7 +85,7 @@ public class MainMenu {
         }
     }
 
-    private void selectBoard(final int id) throws SQLException {
+    private void selectBoard() throws SQLException {
         System.out.println("Informe o id do board para selecionar: ");
         var boardId = scanner.nextLong();
         try (var connection = getConnection()) {
@@ -95,21 +95,21 @@ public class MainMenu {
                 var boardMenu = new BoardMenu(selectedBoard.get());
                 boardMenu.runMenu();
             } else {
-                System.out.printf("O board com o id %s não foi encontrado, informar um id válido! /n", id);
+                System.out.printf("O board com o id %s não foi encontrado, informar um id válido! \n", boardId);
             }
         }
     }
 
     private void deleteBoard() throws SQLException {
-        System.out.println("Informe o id do print que sera deletado");
+        System.out.println("Informe o id do board que será deletado: ");
         var boardId = scanner.nextLong();
         try (var connection = getConnection()) {
             var boardService = new BoardService(connection);
             var operationResult = boardService.delete(boardId);
             if (operationResult) {
-                System.out.printf("Board %s deletado com sucesso!\n", boardId);
+                System.out.printf("Board %s deletado com sucesso! \n", boardId);
             } else {
-                System.out.printf("Board com id: %s não encontrado, informe um id válido\n", boardId);
+                System.out.printf("Board com id: %s não encontrado, informe um id válido \n", boardId);
             }
         }
     }

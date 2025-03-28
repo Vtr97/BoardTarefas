@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a190bb83-2b83-4b97-8434-0da4116ead82" name="Changes" comment="" />
+    <list default="true" id="a190bb83-2b83-4b97-8434-0da4116ead82" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquibase.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquibase.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/BoardColumnDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/BoardColumnDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardColumnEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardColumnEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/service/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/service/BoardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/ui/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/ui/MainMenu.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,13 +40,7 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="BoardTarefas" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="BoardTarefas" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -51,47 +54,62 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BlockEntity.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2upSOxWNW0SDosoNEdcdtF10Fl2" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BoardTarefas [:marques.vitor.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BoardTarefas [build].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/vitor/TheGrind/decolatech2025/Integração de sistemas com banco de dados/BoardTarefas/src/main/resources/db/changelog/migrations&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/vitor/TheGrind/decolatech2025/Integração de sistemas com banco de dados/BoardTarefas/src/main/java/marques/vitor/Main.java&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Gradle.BoardTarefas [:marques.vitor.Main.main()].executor": "Run",
+    "Gradle.BoardTarefas [build].executor": "Run",
+    "Gradle.Build BoardTarefas.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/vitor/TheGrind/decolatech2025/Integração de sistemas com banco de dados/BoardTarefas/src/main/resources/db/changelog/migrations",
+    "onboarding.tips.debug.path": "/home/vitor/TheGrind/decolatech2025/Integração de sistemas com banco de dados/BoardTarefas/src/main/java/marques/vitor/Main.java",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="marques.vitor.ui" />
       <recent name="marques.vitor.persistence.entity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/db/changelog/migrations" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.marques.vitor.Main">
-    <configuration name="marques.vitor.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="marques.vitor.Main" />
       <module name="BoardTarefas.main" />
+      <option name="PROGRAM_PARAMETERS" value="--info --stacktrace" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="marques.vitor.*" />
@@ -107,7 +125,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -124,9 +142,13 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Gradle.BoardTarefas [build]" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.marques.vitor.Main" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.BoardTarefas [build]" />
       </list>
     </recent_temporary>
@@ -141,5 +163,15 @@
       <updated>1742943997035</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.InputMismatchException" package="java.util" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
