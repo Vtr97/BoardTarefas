@@ -7,7 +7,9 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
+import static marques.vitor.persistence.entity.BoardColumnTypeEnum.CANCEL;
 import static marques.vitor.persistence.entity.BoardColumnTypeEnum.INITIAL;
 
 @Data
@@ -19,7 +21,14 @@ public class BoardEntity {
     private List<BoardColumnEntity> boardColumns = new ArrayList<>();
 
     public BoardColumnEntity initialColumn() {
-        return boardColumns.stream().filter(
-                bc -> bc.getType().equals(INITIAL)).findFirst().orElseThrow();
+        return getFilteredColumn(bc -> bc.getType().equals(INITIAL));
+    }
+
+    public BoardColumnEntity getCancelColums() {
+        return getFilteredColumn(bc -> bc.getType().equals(CANCEL));
+    }
+
+    private BoardColumnEntity getFilteredColumn(Predicate<BoardColumnEntity> filter) {
+        return boardColumns.stream().filter(filter).findFirst().orElseThrow();
     }
 }

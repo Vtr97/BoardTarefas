@@ -7,10 +7,8 @@
     <list default="true" id="a190bb83-2b83-4b97-8434-0da4116ead82" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquibase.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquibase.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/BoardColumnDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/BoardColumnDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/CardDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/dao/CardDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/BoardEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/CardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/persistence/entity/CardEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/service/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/service/CardService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/marques/vitor/ui/BoardMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/marques/vitor/ui/BoardMenu.java" afterDir="false" />
     </list>
@@ -55,6 +53,7 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="Class" />
+        <option value="Exception" />
       </list>
     </option>
   </component>
@@ -148,8 +147,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.BoardTarefas [build]" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>

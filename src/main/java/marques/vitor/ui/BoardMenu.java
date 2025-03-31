@@ -1,6 +1,7 @@
 package marques.vitor.ui;
 
 import lombok.AllArgsConstructor;
+import marques.vitor.dto.BoardColumInfoDTO;
 import marques.vitor.persistence.entity.BoardColumnEntity;
 import marques.vitor.persistence.entity.BoardColumnTypeEnum;
 import marques.vitor.persistence.entity.BoardEntity;
@@ -130,16 +131,43 @@ public class BoardMenu {
         }
     }
 
-    private void cancelCard() {
+    private void cancelCard() throws SQLException {
+        System.out.println("Informe o id do card que deseja cancelar: ");
+        var cardId = scanner.nextLong();
+        var cancelColumn = entity.getCancelColums();
+        var boardsColumnsInfo = entity.getBoardColumns().stream().map(
+                bc -> new BoardColumInfoDTO(bc.getId(), bc.getOrder(), bc.getType())
+        ).toList();
+        try (var connection = getConnection()) {
+            new CardService(connection).cancel(cardId, cancelColumn.getId(), boardsColumnsInfo);
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     private void unblockCard() {
     }
 
     private void blockCard() {
+        System.out.println("Informe o id do card que será bloqueado");
+        var cardId = scanner.nextLong();
+        System.out.println("Informe o motivo do bloqueio do card");
+        var blockReason = scanner.next();
+
     }
 
-    private void moveCard() {
+    private void moveCard() throws SQLException {
+        System.out.println("Informe o id do card que deseja mover: ");
+        var cardId = scanner.nextLong();
+        var boardsColumnsInfo = entity.getBoardColumns().stream().map(
+                bc -> new BoardColumInfoDTO(bc.getId(), bc.getOrder(), bc.getType())
+        ).toList();
+        try (var connection = getConnection()) {
+            new CardService(connection).moveToNextColumns(cardId, boardsColumnsInfo);
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void createCard() throws SQLException {
@@ -155,6 +183,8 @@ public class BoardMenu {
         cardEntity.setBoardColumn(creationColumn);
         try (var connection = getConnection()) {
             new CardService(connection).insert(cardEntity);
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
