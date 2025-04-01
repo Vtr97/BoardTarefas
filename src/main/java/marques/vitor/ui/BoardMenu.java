@@ -146,15 +146,31 @@ public class BoardMenu {
 
     }
 
-    private void unblockCard() {
+    private void unblockCard() throws SQLException {
+        System.out.println("Informe o id do card que será desbloquado");
+        var cardId = scanner.nextLong();
+        System.out.println("Informe o motivo do desbloqueio");
+        var unblockReason = scanner.next();
+        try (var connection = getConnection()) {
+            new CardService(connection).unblock(cardId, unblockReason);
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
-    private void blockCard() {
+    private void blockCard() throws SQLException {
         System.out.println("Informe o id do card que será bloqueado");
         var cardId = scanner.nextLong();
         System.out.println("Informe o motivo do bloqueio do card");
         var blockReason = scanner.next();
-
+        var boardsColumnsInfo = entity.getBoardColumns().stream().map(
+                bc -> new BoardColumInfoDTO(bc.getId(), bc.getOrder(), bc.getType())
+        ).toList();
+        try (var connection = getConnection()) {
+            new CardService(connection).block(cardId, blockReason, boardsColumnsInfo);
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void moveCard() throws SQLException {
